@@ -1,0 +1,782 @@
+/* Zerando todo o CSS antes de começar=========================================================*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+img {
+  width: 100%;
+  right: auto;
+}
+
+/*=== Variaveis base (utilizado para otimizar o codigo, quando for necessario acessar pode se apenas chamar a variavel============*/
+:root {
+  --header-height: 4.5rem;
+
+  /* colors */
+  --hue: 159;
+  /* HSL color mode */
+  --base-color: hsl(var(--hue) 36% 57%);
+  --base-color-second: hsl(var(--hue) 65% 88%);
+  --base-color-alt: hsl(var(--hue) 57% 53%);
+  --title-color: hsl(var(--hue) 41% 10%);
+  --text-color: hsl(0 0% 46%);
+  --text-color-light: hsl(0 0% 98%);
+  --body-color: hsl(0 0% 98%);
+
+  /* ==Font---*/
+  --title-font-size: 1.875rem;
+  --subtitle-font-size: 1rem;
+  --title-font: 'Poppins', sans-serif;
+  --body-font: 'DM Sans', sans-serif;
+}
+
+/* === BASE ===============================================================================*/
+html {
+  /*= Permite fazer uma rolagem suave da pagina*/
+  scroll-behavior: smooth;
+  transition: 0.6s;
+}
+
+body {
+  font: 400 1rem var(--body-font);
+  color: var(--text-color);
+  background: var(--body-color);
+  -webkit-font-smoothing: antialiased; /* Vai deixar a cor da font um pouco mais leve*/
+}
+
+.title {
+  font: 700 var(--title-font-size) var(--title-font);
+  color: var(--title-color);
+  -webkit-font-smoothing: auto; /* Vai deixar a cor da font um pouco mais leve*/
+}
+
+.button {
+  background-color: var(--base-color);
+  color: var(--text-color-light);
+  height: 3.5rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 2rem;
+  border-radius: 0.25rem;
+  font: 500 1rem var(--body-font);
+  transition: background 0.3s;
+}
+
+.button:hover {
+  background: var(--base-color-alt);
+}
+
+.divader-1 {
+  height: 1px;
+  /* Cria uma linha e vem mudando a cor*/
+  background: linear-gradient(
+    270deg,
+    hsla(var(--hue), 36%, 57%, 1) 0%,
+    hsla(var(--hue), 65%, 88%, 0.34) 100%
+  );
+}
+
+.divader-2 {
+  height: 1px;
+  /* Cria uma linha e vem mudando a cor*/
+  background: linear-gradient(
+    270deg,
+    hsla(var(--hue), 65%, 88%, 0.34),
+    hsla(var(--hue), 36%, 57%, 1)
+  );
+}
+
+.container {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.grid {
+  display: grid; /* a class grid foi possivel habilitar outras tegs*/
+  gap: 2rem;
+}
+
+.section {
+  padding: calc(5rem + var(--header-height)) 0;
+}
+.section .tittle {
+  margin-bottom: 1rem;
+}
+
+.section .subtitle {
+  font-size: var(--subtitle-font-size);
+}
+
+.section head {
+  margin-bottom: 4rem;
+}
+.section head strong {
+  color: var(--base-color);
+}
+
+/* A parte de layout=========================================================================== */
+#header {
+  border-bottom: 1px solid #e4e4e4;
+  margin-bottom: 2rem;
+  display: flex;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: var(--body-color);
+  width: 100%;
+}
+#header.scroll {
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* === LOGO ===============================================================================*/
+.logo {
+  font: 700 1.31rem var(--title-font);
+  color: var(--title-color);
+}
+
+.logo span {
+  color: var(--base-color);
+}
+
+.logo-alt span {
+  color: var(--text-color-light);
+}
+/* === NAVEGAÇÃO===============================================================================*/
+nav {
+  height: var(--header-height); /* altura da box do nav*/
+  display: flex; /* ajusta um opção de deixar uma caixa ao lado da outra*/
+  align-items: center; /* alinhar a propriedade deixando a no centro*/
+  justify-content: space-between; /* separa as caixas para ficarem opostas, uma em cada lado. */
+  width: 100%;
+}
+
+nav ul li {
+  text-align: center;
+}
+
+nav ul li a {
+  transition: 0.3s;
+  position: relative;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+  color: var(--base-color);
+}
+
+nav ul li a::after {
+  content: '';
+  width: 0%;
+  height: 2px;
+  background: var(--base-color);
+
+  position: absolute;
+  left: 0;
+  bottom: -1.5rem;
+  transition: widht 0.2s;
+}
+
+nav ul li a:hover::after,
+nav ul li a.active::after {
+  width: 100%;
+}
+
+nav .menu {
+  opacity: 0;
+  visibility: hidden;
+  top: -20rem;
+  transition: 0.2s;
+}
+nav .menu ul {
+  display: none;
+}
+
+/* Mostrar o menu =====================*/
+nav.show .menu {
+  opacity: 1;
+  visibility: visible;
+
+  background: var(--body-color);
+
+  height: 100vh;
+  width: 100vw;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  display: grid;
+  place-content: center;
+}
+
+nav.show .menu ul {
+  display: grid;
+}
+
+nav.show ul.grid {
+  gap: 4rem;
+}
+
+/* toggle menu / liga e desliga do menu*/
+.toggle {
+  color: var(--base-color);
+  font-size: 1.5rem;
+  cursor: pointer; /* permite mudar o ponteiro quando para em cima do elemento*/
+}
+
+nav .icon-close {
+  visibility: hidden;
+  opacity: 0;
+
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  transition: 0.2s;
+}
+
+nav.show div.icon-close {
+  visibility: visible;
+  opacity: 1;
+  top: 1.5rem;
+}
+
+/* HOME ========================*/
+#home {
+  overflow: hidden;
+}
+
+#home .container {
+  margin: 0;
+}
+
+#home .image {
+  position: relative;
+}
+
+#home .image::before {
+  content: '';
+  height: 100%;
+  width: 100%;
+  background: var(--base-color-second);
+  position: absolute;
+  top: -16.8%;
+  left: 16.8%;
+  z-index: -1;
+}
+
+#home .image img {
+  position: relative; /*O position relative, habilita algumas opções do CSS */
+  right: 2.93rem;
+}
+
+#home .image img,
+#home .image::before {
+  border-radius: 0.25rem;
+}
+
+#home .text {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  text-align: center;
+}
+
+#home .text h1 {
+  margin-bottom: 1rem;
+}
+
+#home .text p {
+  margin-bottom: 2rem;
+  max-width: 100%;
+}
+
+/* About - Sobre ================================*/
+#abou {
+  background: white;
+}
+
+#about .container {
+  margin: 0;
+}
+
+#about .image {
+  position: relative;
+}
+
+#about .image::before {
+  content: '';
+  height: 100%;
+  width: 100%;
+  background: var(--base-color-second);
+  position: absolute;
+  top: -8.3%;
+  left: -33%;
+  z-index: -1;
+}
+
+#about .image img {
+  position: relative; /*O position relative, habilita algumas opções do CSS */
+}
+
+#about .image img,
+#about .image::before {
+  border-radius: 0.25rem;
+}
+
+#about .text {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+/* Services - Serviços ================================*/
+.cards.grid {
+  gap: 1.5rem;
+}
+
+.cards {
+  padding: 3.625rem 2rem;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.08);
+  border-bottom: 0.25rem solid var(--base-color);
+  border-radius: 0.25rem 0.25rem 0 0;
+  text-align: center;
+}
+
+.cards i {
+  display: block;
+  margin-bottom: 1.5rem;
+  font-size: 5rem;
+  color: var(--base-color);
+}
+
+.cards .title {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Comentarios - TESTIMONIALS ================================*/
+#testimonials {
+  background: white;
+}
+
+#testimonials .countainer {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#testimonials header {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  margin-bottom: 0;
+}
+
+#testemonials blockquote {
+  padding: 2rem;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 0.25rem;
+}
+
+#testemonials blockquote p {
+  position: relative;
+  text-indent: 1.875rem;
+  margin-bottom: 1.5rem;
+  color: var(--title-color);
+}
+
+#testemonials blockquote p span {
+  font: 700 2.5rem serif;
+  position: absolute;
+  top: -0.375rem;
+  left: -1.875rem;
+  color: var(--base-color);
+}
+
+#testemonials cite {
+  display: flex;
+  align-items: center;
+  font-style: normal;
+}
+/* Ajustar a imagem do depoimento*/
+#testemonials cite img {
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover; /* Ajuda e ajustar a imagem*/
+  clip-path: circle(); /* criar uma mascara na imagem*/
+  margin-right: 0.5rem;
+}
+
+/* Swiper*/
+
+.swiper-slide {
+  height: auto;
+  padding: 4rem 1rem;
+}
+
+.swiper-pagination-bullet {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--base-color);
+}
+
+/* CONTATO == CONTANCT ====*/
+
+#contact .grid {
+  gap: 4rem;
+}
+
+#contact .text p {
+  margin-bottom: 2rem;
+}
+
+#contact .button i,
+#contact ul li i {
+  font-size: 1.5rem;
+  margin-right: 0.625rem;
+}
+
+#contact ul.grid {
+  gap: 2rem;
+}
+
+#contact ul li {
+  display: flex;
+  align-items: center;
+}
+
+/* FOOTER ====*/
+
+footer {
+  background: var(--base-color);
+}
+
+footer.section {
+  padding: 4rem 0;
+}
+
+footer .logo {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+footer .brand {
+  color: var(--text-color-light);
+  margin-bottom: 0.75rem;
+}
+
+footer i {
+  font-size: 1.5rem !important;
+  color: var(--text-color-light);
+}
+
+footer .social {
+  grid-auto-flow: column; /* Utilizado para ajustar o grid que foi inserido na class social, pois o grid por padrão lança uma caixa a baixo da outra.*/
+  width: fit-content; /* Vai encaixar o conteudo de acordo com o tamanho do icone. -- encaixe no conteudo*/
+}
+
+footer .social a {
+  /* margin-right: 2rem; */
+  transition: 0.3s; /* precisa do transition para fazer uma transição*/
+  display: inline-block;
+}
+
+/* Faz os icones ficarem mexendo na tela*/
+footer .social a:hover {
+  transform: translateY(-8px);
+}
+
+/* Botão Voltar ao topo*/
+.back-to-top {
+  background: var(--base-color);
+  color: var(--text-color-light);
+
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+
+  padding: 0.5rem;
+  clip-path: circle();
+
+  font-size: 1.5rem;
+  line-height: 0;
+
+  visibility: hidden;
+  opacity: 0;
+
+  transition: 0.3s;
+  transform: translateY(100%); /* vai possibilitar mover o botão em 100%*/
+}
+
+.back-to-top.show {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(
+    0
+  ); /* ao adicionar a clas show devido o valode do eixo y estar 0 vai voltar o botão a pagina. */
+}
+
+/* ===== Meda Query === Alterar tamanho conforme o dispositivo*/
+
+/* extra larger device: 1200> */
+@media (min-width: 1200px) {
+  /* Ajustar a margem da 1° caixa*/
+  .container {
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section {
+    padding: 10rem;
+  }
+
+  /* foi adicionado separado o .section header e o #testimonial, por conta da especifidade*/
+  .section header,
+  #testimonials header {
+    max-width: 32rem;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .button {
+    height: 3.125rem;
+  }
+
+  nav .menu {
+    opacity: 1;
+    visibility: visible;
+    top: 0;
+  }
+
+  nav .menu ul {
+    display: flex;
+    gap: 2rem;
+  }
+
+  nav .menu li a.title {
+    font: 400 1rem var(--body-font);
+    -webkit-font-smoothing: antialiased; /* Vai deixar a cor da font um pouco mais leve*/
+  }
+
+  nav .menu ul li a.title.active {
+    font-weight: bold;
+    -webkit-font-smoothing: auto;
+  }
+
+  nav .icon-menu {
+    display: none; /* tirar o icone do menu que ficou. */
+  }
+
+  /*Layout*/
+  main {
+    margin-top: var(--header-height);
+  }
+
+  /* Alterar a ordem dos elementos -- o order funciona pois ele esta dentro de uma caixa grid*/
+  #home .container {
+    grid-auto-flow: column;
+    justify-content: space-between;
+    margin: 0 auto;
+  }
+
+  #home .image {
+    order: 1;
+  }
+
+  #home .text {
+    order: 0;
+    max-width: 24rem;
+    text-align: left;
+  }
+  #about .container {
+    margin: 0 auto;
+    grid-auto-flow: column;
+  }
+
+  /* Serviços */
+
+  .cards {
+    /* Esta pegando todo o espaço e dividindo em frações iguais. o fr refere se a fração desse elemento e pode ser alterado deixando maior*/
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .card {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  /*testimonial*/
+  #testimonial .container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Contato.*/
+  #contact .container {
+    grid-auto-flow: column;
+    align-items: center; /* Alinhar os itens ao centro. */
+  }
+
+  #contact .text {
+    max-width: 25rem;
+  }
+
+  /*footer*/
+
+  footer.section {
+    padding: 3.75rem;
+  }
+
+  footer .container {
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer .logo {
+    font-size: 2.25rem;
+  }
+}
+
+/* larger device: 1023 >*/
+@media (min-width: 1023px) {
+  /* Ajustar a margem da 1° caixa*/
+  .container {
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section {
+    padding: 10rem;
+  }
+
+  /* foi adicionado separado o .section header e o #testimonial, por conta da especifidade*/
+  .section header,
+  #testimonials header {
+    max-width: 32rem;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .button {
+    height: 3.125rem;
+  }
+
+  nav .menu {
+    opacity: 1;
+    visibility: visible;
+    top: 0;
+  }
+
+  nav .menu ul {
+    display: flex;
+    gap: 2rem;
+  }
+
+  nav .menu ul li a.title {
+    font: 400 1rem var(--body-font);
+    -webkit-font-smoothing: antialiased; /* Vai deixar a cor da font um pouco mais leve*/
+  }
+
+  nav .menu ul li a.title.active {
+    font-weight: bold;
+    -webkit-font-smoothing: auto;
+  }
+
+  nav .icon-menu {
+    display: none; /* tirar o icone do menu que ficou. */
+  }
+
+  /*Layout*/
+  main {
+    margin-top: var(--header-height);
+  }
+
+  /* Alterar a ordem dos elementos -- o order funciona pois ele esta dentro de uma caixa grid*/
+  #home .container {
+    grid-auto-flow: column;
+    justify-content: space-between;
+    margin: 0 auto;
+  }
+
+  #home .image {
+    order: 1;
+  }
+
+  #home .text {
+    order: 0;
+    max-width: 24rem;
+    text-align: left;
+  }
+  #about .container {
+    margin: 0 auto;
+    grid-auto-flow: column;
+  }
+
+  /* Serviços */
+
+  .cards {
+    /* Esta pegando todo o espaço e dividindo em frações iguais. o fr refere se a fração desse elemento e pode ser alterado deixando maior*/
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .card {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  /*testimonial*/
+  #testimonial .container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Contato.*/
+  #contact .container {
+    grid-auto-flow: column;
+    align-items: center; /* Alinhar os itens ao centro. */
+  }
+
+  #contact .text {
+    max-width: 25rem;
+  }
+
+  /*footer*/
+
+  footer.section {
+    padding: 3.75rem;
+  }
+
+  footer .container {
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer .logo {
+    font-size: 2.25rem;
+  }
+}
+
+/* larger device: 992 >*/
+@media (min-width: 992px) {
+  :root {
+    --title-font-size: 2.25rem;
+    --subtitle-font-size: 1.125rem;
+  }
+}
+/* medium device: 767 >*/
